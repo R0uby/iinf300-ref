@@ -39,8 +39,9 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
   lint_python:
-    name: Lint python code
+    name: Je lint le python comme jaja
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -57,3 +58,18 @@ jobs:
         mypy-options: "--ignore-missing-imports --show-error-codes"
         #pylint-options: "--rcfile=setup.cfg"
         isort-options: "-w 100"
+        
+  hadolint:
+    name: Hadolint c supair
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: write
+      attestations: write
+      id-token: write
+    steps:
+    - uses: actions/checkout@v3
+    - name: Hadolint
+    - uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: docker/Dockerfile
