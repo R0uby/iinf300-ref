@@ -3,7 +3,8 @@ name: CI/CD
 on:
   push:
     branches: ['main']
-
+    tags:
+      - "v1.0.0"
 jobs:
   lint_python:
     name: Je lint le python comme jaja
