@@ -83,7 +83,7 @@ jobs:
     needs: push_to_registries
     steps:
       - name: Run Docker container
-        run: docker run -d -t -p 8080:80 --name harbor.kakor.ovh/ipi/groupe-3-bis:sha-17bba91
+        run: docker run -d -p 8080:80 --name nginx harbor.kakor.ovh/ipi/groupe-3-bis:sha-17bba91
       - name: test nginx
         run: sleep 10 && curl http://127.0.0.1:8080
 
