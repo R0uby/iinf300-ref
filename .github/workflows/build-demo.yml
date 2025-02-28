@@ -5,6 +5,40 @@ on:
     branches: ['main']
 
 jobs:
+  lint_python:
+    name: Je lint le python comme jaja
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: write
+      attestations: write
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Python Linter
+      uses: sunnysid3up/python-linter@master
+      with:
+        source: "docker/app"
+        strict: "low"
+        mypy-options: "--ignore-missing-imports --show-error-codes"
+        #pylint-options: "--rcfile=setup.cfg"
+        isort-options: "-w 100"
+        
+  hadolint:
+    name: Hadolint c supair
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: write
+      attestations: write
+      id-token: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Hadolint
+      uses: hadolint/hadolint-action@v3.1.0
+      with:
+        dockerfile: docker/Dockerfile
+
   push_to_registries:
     name: Push Docker image to single registry
     runs-on: ubuntu-latest
@@ -42,37 +76,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-
-  lint_python:
-    name: Je lint le python comme jaja
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: write
-      attestations: write
-      id-token: write
-    steps:
-    - uses: actions/checkout@v4
-    - name: Python Linter
-      uses: sunnysid3up/python-linter@master
-      with:
-        source: "docker/app"
-        strict: "low"
-        mypy-options: "--ignore-missing-imports --show-error-codes"
-        #pylint-options: "--rcfile=setup.cfg"
-        isort-options: "-w 100"
-        
-  hadolint:
-    name: Hadolint c supair
-    runs-on: ubuntu-latest
-    permissions:
-      packages: write
-      contents: write
-      attestations: write
-      id-token: write
-    steps:
-    - uses: actions/checkout@v4
-    - name: Hadolint
-      uses: hadolint/hadolint-action@v3.1.0
-      with:
-        dockerfile: docker/Dockerfile
